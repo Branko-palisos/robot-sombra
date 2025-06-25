@@ -1,26 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+//clean code completed!
+//using System.Collections;
+//using System.Collections.Generic;
+//using Unity.VisualScripting;
+//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class LevelButtonHelper : MonoBehaviour
 {
-    [SerializeField]
+    GameManager gameManager;    
+    [SerializeField]    
     int myLevel;
-    // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.gameManager;
         Disable();   
     }
-
-    // Update is called once per frame
     private void Disable()
     {
-        if (myLevel <= FindObjectOfType<LevelLogSceneController>().GetLastCompletedLevel()+1)
-        {
+        if (myLevel <= gameManager.GetLastCompletedLevel()+1)
+        {           
             Debug.Log("Active");
-           
         }
         else
         {
@@ -29,4 +28,3 @@ public class LevelButtonHelper : MonoBehaviour
         }
     }
 }
-

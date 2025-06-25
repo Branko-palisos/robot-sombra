@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Data.Common;
+//using System.Collections.Generic;
+//using System.Data.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+//using UnityEngine.UI;
+//using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -45,11 +45,10 @@ public class PlayerBehaviour : MonoBehaviour
                 Level1Movement();
             fruitCount = 3;
             Debug.Log("Win");
-            FindObjectOfType<LevelLogSceneController>().ChangeLastLevelCompleted(1);
+         //   FindObjectOfType<LevelLogSceneController>().ChangeLastLevelCompleted(1);
             //SceneManager.LoadScene("Level 2");     
             TAP.gameObject.SetActive(true);
             animator.SetTrigger(EnumManager.AnimatiorParameters.DanceTrigger.ToString());
-            yield return new WaitForSeconds(3);
             SceneManager.LoadScene(EnumManager.Scenes.Level2.ToString());
             }
 
@@ -73,6 +72,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         
     }
+ 
     void Level1Movement()
     {
         if (Input.GetKey("d"))
@@ -126,7 +126,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             fruitCount = 3;
             Debug.Log("Win");
-            FindObjectOfType<LevelLogSceneController>().ChangeLastLevelCompleted(1);
+     //       FindObjectOfType<LevelLogSceneController>().ChangeLastLevelCompleted(1);
             //SceneManager.LoadScene("Level 2");     
             TAP.gameObject.SetActive(true);
           animator.SetTrigger(EnumManager.AnimatiorParameters.DanceTrigger.ToString());
@@ -145,6 +145,19 @@ public class PlayerBehaviour : MonoBehaviour
         fruitCountTMP.text = fruitCount.ToString();
       
     }
+   internal float GetSpeed()
+    {
+        return speed;
+    }
+   internal void SetSpeed(float _amount)
+    {
+        speed = _amount;
+    }
+    internal void ChangeSpeed( float _change)
+    {
+        speed += _change;
+    }
+    
     public void Death()
     {
         StartCoroutine(DeathCorutine());
@@ -173,8 +186,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Debug.Log("speed up");
     }
-    public void ChangeSpeed(float amount)
+   internal float GetFruitCount()
     {
-        speed += amount;
+       return fruitCount;   
+ 
     }
+ 
+
 }
