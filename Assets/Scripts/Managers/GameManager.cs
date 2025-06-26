@@ -1,11 +1,16 @@
 // clean code completed!
 //using System.Collections;
 //using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    TextMeshProUGUI fruitCountTMP;
+    TextMeshProUGUI TAP;
+    TextMeshProUGUI DETAP;
+    PlayerBehaviour playerBehaviour;
     int lastCompletedLevel = 0;
     internal static GameManager gameManager;
     //efuncisones
@@ -32,8 +37,20 @@ public class GameManager : MonoBehaviour
         SceneManager.GetActiveScene();
         //Debug.Log(SceneManager.GetActiveScene().name);
     }
+    private void Update()
+    {
+        TAP.gameObject.SetActive(true);
+        
+    }
+    void FuncionDelEmisor()
 
+    {
 
+        // si hay alguien escuchando
+
+ 
+
+    }
     internal void ChangeLastLevelCompleted(int _amount)
     {
         lastCompletedLevel += _amount;

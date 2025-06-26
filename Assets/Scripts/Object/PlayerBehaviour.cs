@@ -6,37 +6,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 //using UnityEngine.UI;
 //using static UnityEngine.RuleTile.TilingRuleOutput;
-
 public class PlayerBehaviour : MonoBehaviour
 {
-    internal float fruitCount;
-    public TextMeshProUGUI fruitCountTMP;
-    public TextMeshProUGUI TAP;
-    public TextMeshProUGUI DETAP;
-    public MainMenuSceneController mainMenuSceneController; 
-    public GameObject continueButton;
-    public GameObject BackToMenu;
+
+    float fruitCount;
+     MainMenuSceneController mainMenuSceneController; 
+     GameObject continueButton;
+     GameObject BackToMenu;
     [SerializeField]
     internal float speed = 5.0f;
-    public Vector3 growFactor = new Vector3(0.1f, 0.1f, 0.1f);
+     Vector3 growFactor = new Vector3(0.1f, 0.1f, 0.1f);
     private Vector3 growLimit = new Vector3(2, 2, 2);
     private Animator animator;
     public bool bill = false;
+    private int brainFreeze = 3;
     // Start is called before the first frame update
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
-    void Start()
-    {
-      //  TAP.gameObject.SetActive(false);
-      //  DETAP.gameObject.SetActive(false);
-       // continueButton.gameObject.SetActive(false);
-     //   BackToMenu.gameObject.SetActive(false);
-      //  Debug.Log("Ever since I was a kid");
-    }
- 
-    // Update is called once per frame
      void Update()
     {
             if (SceneManager.GetActiveScene().name == "Level1")
@@ -44,10 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
                 Debug.Log("Level 1");
                 Level1Movement();
             fruitCount = 3;
-            Debug.Log("Win");
-         //   FindObjectOfType<LevelLogSceneController>().ChangeLastLevelCompleted(1);
-            //SceneManager.LoadScene("Level 2");     
-            TAP.gameObject.SetActive(true);
+            Debug.Log("Win");    
             animator.SetTrigger(EnumManager.AnimatiorParameters.DanceTrigger.ToString());
             SceneManager.LoadScene(EnumManager.Scenes.Level2.ToString());
             }
@@ -57,22 +42,15 @@ public class PlayerBehaviour : MonoBehaviour
         {
             fruitCount = 195;
             if (fruitCount > 199)
-            {
-                //  Debug.Log("Level 2");
-           
+            {      
                 Debug.Log("Win");
-                //SceneManager.LoadScene("Level 2");     
-                //  animator.SetTrigger(EnumManager.AnimatiorParameters.DanceTrigger.ToString());
             }
 
             Level2Movement();
         }
         Vector3 direction = new Vector3 (0,1,0);    
-        Vector3 velocity  = direction * speed;
-
-        
+        Vector3 velocity  = direction * speed;       
     }
- 
     void Level1Movement()
     {
         if (Input.GetKey("d"))
@@ -118,7 +96,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         StartCoroutine(GetFruitCR());
     }
-    IEnumerator GetFruitCR()
+   internal IEnumerator GetFruitCR()
     {
       
         fruitCount += 1;
@@ -128,18 +106,25 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("Win");
      //       FindObjectOfType<LevelLogSceneController>().ChangeLastLevelCompleted(1);
             //SceneManager.LoadScene("Level 2");     
-            TAP.gameObject.SetActive(true);
           animator.SetTrigger(EnumManager.AnimatiorParameters.DanceTrigger.ToString());
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(brainFreeze);
             SceneManager.LoadScene(EnumManager.Scenes.Level2.ToString());
         }
         Grow();
-      
+        if (playerBehaviour.GetFruitCR != null)
+        {
+
+            // mando la señal
+
+            playerBehaviour.GetFruitCR();
+
+        }
 
         UpdateFruitCountTMP();
         Debug.Log("fruitCount = " + fruitCount);
 
     } 
+
     internal void UpdateFruitCountTMP()
     {
         fruitCountTMP.text = fruitCount.ToString();
@@ -157,7 +142,6 @@ public class PlayerBehaviour : MonoBehaviour
     {
         speed += _change;
     }
-    
     public void Death()
     {
         StartCoroutine(DeathCorutine());
@@ -191,6 +175,4 @@ public class PlayerBehaviour : MonoBehaviour
        return fruitCount;   
  
     }
- 
-
 }
